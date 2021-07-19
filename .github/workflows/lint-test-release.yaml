@@ -58,6 +58,7 @@ jobs:
             fi
           fi
         done
+        echo $CHANGED_CHART
         # Trim leading space
         export CHANGED_CHART=$(echo $CHANGED_CHART | sed 's/^ *//g')
         echo "::set-output name=changed_charts::$CHANGED_CHART"
