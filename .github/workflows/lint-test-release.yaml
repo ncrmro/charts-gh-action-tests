@@ -31,6 +31,16 @@ jobs:
     - name: Run chart-testing (lint)
       run: ct lint --all --validate-maintainers=false
 
+    - name: Get changed files
+      id: changed-files
+      uses: tj-actions/changed-files@v8.9
+
+    - name: List all modified files
+      run: |
+        for file in "${{ steps.changed-files.outputs.all_modified_files }}"; do
+          echo "$file was modified"
+        done
+
   release-charts:
     runs-on: 'ubuntu-latest'
     needs: lint-test
