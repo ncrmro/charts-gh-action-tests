@@ -41,6 +41,12 @@ jobs:
     - name: List all modified files
       id: changed-charts
       run: |
+        export CHANGED_CHART="hello world"
+        echo $CHANGED_CHART
+
+    - name: List all modified files
+      id: changed-charts
+      run: |
         export CHANGED_CHART=""
         for file in ${{ steps.changed-files.outputs.all_modified_files }}; do
           if [[ $file == *"charts"* ]]; then
