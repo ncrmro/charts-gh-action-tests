@@ -14,25 +14,25 @@ jobs:
       with:
         fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
 
-    - name: Set up Helm
-      uses: azure/setup-helm@v1
-      with:
-        version: v3.4.0
-
-    - name: Setup Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.7
-
-    - name: Set up chart-testing
-      uses: helm/chart-testing-action@v2.0.1
-
-    - name: Add Chart Repos
-      run: |
-        helm repo add bitnami https://charts.bitnami.com/bitnami
-
-    - name: Run chart-testing (lint)
-      run: ct lint --all --validate-maintainers=false
+#    - name: Set up Helm
+#      uses: azure/setup-helm@v1
+#      with:
+#        version: v3.4.0
+#
+#    - name: Setup Python
+#      uses: actions/setup-python@v2
+#      with:
+#        python-version: 3.7
+#
+#    - name: Set up chart-testing
+#      uses: helm/chart-testing-action@v2.0.1
+#
+#    - name: Add Chart Repos
+#      run: |
+#        helm repo add bitnami https://charts.bitnami.com/bitnami
+#
+#    - name: Run chart-testing (lint)
+#      run: ct lint --all --validate-maintainers=false
 
     - name: Get changed files
       id: changed-files
