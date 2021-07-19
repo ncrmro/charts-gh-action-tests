@@ -45,6 +45,7 @@ jobs:
         for file in ${{ steps.changed-files.outputs.all_modified_files }}; do
           if [[ $file == *"charts"* ]]; then
             chart=`echo $file | sed 's/charts\///g' | sed 's/\/.*//g'`
+            echo "CHART $chart"
             # If chart is not found in changed chart add it
             if ! [[ $CHANGED_CHART =~ $chart  ]];then
               export CHANGED_CHART="$CHANGED_CHART $chart"
