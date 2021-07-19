@@ -40,19 +40,19 @@ jobs:
 
     - name: List all modified files
       run: |
-      export CHANGED_CHART=""
-      for file in ${steps.changed-files.outputs.all_modified_files}; do
-        if [[ $file == *"charts"* ]]; then
-          chart=`echo $file | sed 's/charts\///g' | sed 's/\/.*//g'`
-          # If chart is not found in changed chart add it
-          if ! [[ $CHANGED_CHART =~ $chart  ]];then
-            export CHANGED_CHART="$CHANGED_CHART $chart"
+        export CHANGED_CHART=""
+        for file in ${steps.changed-files.outputs.all_modified_files}; do
+          if [[ $file == *"charts"* ]]; then
+            chart=`echo $file | sed 's/charts\///g' | sed 's/\/.*//g'`
+            # If chart is not found in changed chart add it
+            if ! [[ $CHANGED_CHART =~ $chart  ]];then
+              export CHANGED_CHART="$CHANGED_CHART $chart"
+            fi
           fi
-        fi
-      done
-      # Trim leading space
-      export CHANGED_CHART=$(echo $CHANGED_CHART | sed 's/^ *//g')
-      echo "::set-output name=changed_charts::$CHANGED_CHART"
+        done
+        # Trim leading space
+        export CHANGED_CHART=$(echo $CHANGED_CHART | sed 's/^ *//g')
+        echo "::set-output name=changed_charts::$CHANGED_CHART"
 
   release-charts:
     runs-on: 'ubuntu-latest'
