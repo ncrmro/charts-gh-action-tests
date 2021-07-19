@@ -38,33 +38,38 @@ jobs:
       id: changed-files
       uses: tj-actions/changed-files@v8.9
 
-    - name: TEST
-      run: |
-        export CHANGED_CHART="hello world"
-        echo $CHANGED_CHART
-
-    - name: List all modified files
+    - name: Get changed charts
       id: changed-charts
       run: |
         export CHANGED_CHART=""
         for file in ${{ steps.changed-files.outputs.all_modified_files }}; do
-          echo "Changed file $file"
           if [[ $file == *"charts"* ]]; then
             chart=`echo $file | sed 's/charts\///g' | sed 's/\/.*//g'`
-            echo "CHART $chart"
             # If chart is not found in changed chart add it
             if ! [[ $CHANGED_CHART =~ $chart  ]];then
               export CHANGED_CHART="$CHANGED_CHART $chart"
             fi
           fi
         done
-        echo $CHANGED_CHART
         # Trim leading space
         export CHANGED_CHART=$(echo $CHANGED_CHART | sed 's/^ *//g')
         echo "::set-output name=changed_charts::$CHANGED_CHART"
 
-    - name: List changed charts
-      run: echo "${{ steps.changed-charts.outputs.changed_charts }}"
+    - name: Build changed charts
+      run: |
+        for chart in ${{ steps.changed-charts.outputs.changed_charts }}}; do
+          helm package --destination ./dist charts/$chart
+        done
+
+    - name: Get Short sha
+      id: release-name
+      run: |
+        export $GITHUB_SHORT_SHA=$(echo $GITHUB_SHA | cut -c1-8)
+        echo ${{ steps.changed-files.outputs.all_modified_files }}
+
+    - name: Test sha name
+      run: |
+        echo "${{ steps.release-name.outputs.all_modified_files }}"
 
   release-charts:
     runs-on: 'ubuntu-latest'
