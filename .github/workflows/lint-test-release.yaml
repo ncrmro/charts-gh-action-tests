@@ -39,6 +39,7 @@ jobs:
       uses: tj-actions/changed-files@v8.9
 
     - name: List all modified files
+      id: changed-charts
       run: |
         export CHANGED_CHART=""
         for file in ${{ steps.changed-files.outputs.all_modified_files }}; do
@@ -53,6 +54,9 @@ jobs:
         # Trim leading space
         export CHANGED_CHART=$(echo $CHANGED_CHART | sed 's/^ *//g')
         echo "::set-output name=changed_charts::$CHANGED_CHART"
+
+    - name: List changed charts
+      run: echo "${{ steps.changed-charts.outputs.changed_charts }}"
 
   release-charts:
     runs-on: 'ubuntu-latest'
