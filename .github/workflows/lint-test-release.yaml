@@ -65,11 +65,11 @@ jobs:
       id: release-name
       run: |
         export GITHUB_SHORT_SHA=$(echo $GITHUB_SHA | cut -c1-8)
-        echo ${{ steps.changed-files.outputs.all_modified_files }}
+        echo ${{ steps.changed-files.outputs.short_sha::$GITHUB_SHORT_SHA }}
 
     - name: Test sha name
       run: |
-        echo "${{ steps.release-name.outputs.all_modified_files }}"
+        echo "${{ steps.release-name.outputs.short_sha }}"
 
   release-charts:
     runs-on: 'ubuntu-latest'
