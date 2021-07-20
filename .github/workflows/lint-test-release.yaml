@@ -64,7 +64,7 @@ jobs:
     - name: Get Short sha
       id: release-name
       run: |
-        export $GITHUB_SHORT_SHA=$(echo $GITHUB_SHA | cut -c1-8)
+        export GITHUB_SHORT_SHA=$(echo $GITHUB_SHA | cut -c1-8)
         echo ${{ steps.changed-files.outputs.all_modified_files }}
 
     - name: Test sha name
