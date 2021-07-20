@@ -57,7 +57,7 @@ jobs:
 
     - name: Build changed charts
       run: |
-        for chart in ${{ steps.changed-charts.outputs.changed_charts }}}; do
+        for chart in ${{ steps.changed-charts.outputs.changed_charts }}; do
           helm package --destination ./dist charts/$chart
         done
 
